@@ -13,19 +13,18 @@ Photos will be stored on the host machine in addition to Backblaze. The host mac
 ## Instructions
 
 * Follow the instructions to create a Google Cloud project. Save the project's `client_secret.json` file to a safe location. (ex /data/config/client_id.json). You'll need to mount it to the Docker container later.
-* Create an empty directory on the host to store the Google photos.
+* Create an empty directory on the host to store the Google photos (ex /data/photos).
 * Supply the needed environment variables
   * `STORAGE_DIR`: Location where to download Google photos
   * `CLIENT_SECRET`: Location of the Google Cloud Project's json file
-  * `B2_BUCKET`: Name of the S3 Bucket
+  * `B2_BUCKET`: Name of the Backblaze B2 Bucket
   * `B2_KEY_ID`: Backblaze Application Key ID
   * `B2_APP_KEY`: Backblaze Application Key
-* Start the Docker container with the required params
+* Start the Docker container with the required params and mount your directory
 
 ### Example
 
 ```
-# Fill these in
 STORAGE_DIR="/data/photos"
 CLIENT_SECRET="/data/config/client_id.json"
 B2_BUCKET="my-bucket"
@@ -34,11 +33,11 @@ B2_APP_KEY="my_secret"
 
 # Run
 docker run --rm \
--v /data:/data \
--e B2_BUCKET=$B2_BUCKET \
--e B2_KEY_ID=$B2_KEY_ID \
--e B2_APP_KEY=$B2_APP_KEY \
--e STORAGE_DIR=$STORAGE_DIR \
--e CLIENT_SECRET=$CLIENT_SECRET \
-tylerodonnell/google-photos-backup
+  -v /data:/data \
+  -e B2_BUCKET=$B2_BUCKET \
+  -e B2_KEY_ID=$B2_KEY_ID \
+  -e B2_APP_KEY=$B2_APP_KEY \
+  -e STORAGE_DIR=$STORAGE_DIR \
+  -e CLIENT_SECRET=$CLIENT_SECRET \
+  ghcr.io/tylerodonnell/google-photos-backup:latest
 ```
