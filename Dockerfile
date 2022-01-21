@@ -29,16 +29,5 @@ COPY entrypoint.sh /entrypoint.sh
 
 ENV PATH="/opt/venv/bin:$PATH"
 
-RUN mkdir -p /root/.config /config \
-    && ln -s /config /root/.config/gphotos-sync \
-    && mkdir /storage
-
-VOLUME /config
-VOLUME /storage
-
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
-
-
-
-
