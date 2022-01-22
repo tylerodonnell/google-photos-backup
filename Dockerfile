@@ -11,7 +11,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 RUN pip install --no-cache-dir --upgrade gphotos-sync
 
-FROM  python:3-alpine
+FROM python:3-alpine
 
 COPY --from=gphotos-sync-builder /opt/venv /opt/venv
 
@@ -22,8 +22,7 @@ RUN URL=http://downloads.rclone.org/current/rclone-current-linux-amd64.zip ; \
   && unzip /tmp/rclone-current-linux-amd64.zip \
   && mv /tmp/rclone-*-linux-amd64/rclone /usr/bin \
   && rm -r /tmp/rclone* \
-  && apk add --update bash \
-  && rm -rf /var/cache/apk/*
+  && apk add --no-cache --update bash
 
 COPY entrypoint.sh /entrypoint.sh
 
