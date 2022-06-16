@@ -17,7 +17,7 @@ rclone config create backblaze b2
 rclone sync $STORAGE_DIR backblaze:$B2_BUCKET --b2-account $B2_KEY_ID --b2-key $B2_APP_KEY --transfers 16 --copy-links --exclude=".*" -v
 
 # Ping Healthchecks.io
-if [ -n "$HEALTH_CHECK_URL" ]
+if [ -n "$HEALTH_CHECK_URL" ]; then
   echo "🛎 Pinging HealthCheck"
   wget $HEALTH_CHECK_URL -T 10 -t 5 -O /dev/null
 fi
