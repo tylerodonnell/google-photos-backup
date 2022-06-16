@@ -29,4 +29,4 @@ COPY entrypoint.sh /entrypoint.sh
 ENV PATH="/opt/venv/bin:$PATH"
 
 RUN chmod +x /entrypoint.sh
-ENTRYPOINT [ "/entrypoint.sh" ]
+CMD [ "/bin/sh", "/entrypoint.sh" ]

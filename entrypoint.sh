@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ue
+set -e
 
 [ -z "$STORAGE_DIR" ] && { echo "Must provide STORAGE_DIR in environment"; exit 1; }
 [ -z "$CLIENT_SECRET" ] && { echo "Must provide CLIENT_SECRET in environment"; exit 1; }
@@ -16,4 +16,11 @@ echo "🌎 Syncing photos"
 rclone config create backblaze b2
 rclone sync $STORAGE_DIR backblaze:$B2_BUCKET --b2-account $B2_KEY_ID --b2-key $B2_APP_KEY --transfers 16 --copy-links --exclude=".*" -v
 
+# Ping Healthchecks.io
+if [ -n "$HEALTH_CHECK_URL" ]
+  echo "🛎 Pinging HealthCheck"
+  wget $HEALTH_CHECK_URL -T 10 -t 5 -O /dev/null
+fi
+
+# Success
 echo "✅ Succesfully synced Google photos"
